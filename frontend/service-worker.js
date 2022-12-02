@@ -19,22 +19,22 @@ workbox.routing.registerRoute(
 
 
 
-self.addEventListener("install", event => {
-    event.waitUntil(
-        caches.open(cacheName).then(cache => {
-            console.log("Caching shell assets")
-            cache.addAll(appAssets)
-        })
-    )    
-})
+// self.addEventListener("install", event => {
+//     event.waitUntil(
+//         caches.open(cacheName).then(cache => {
+//             console.log("Caching shell assets")
+//             cache.addAll(appAssets)
+//         })
+//     )    
+// })
 
-self.addEventListener("activate", event => {
-    console.log("activated")
-})
+// self.addEventListener("activate", event => {
+//     console.log("activated")
+// })
 
-self.addEventListener("fetch", event => {
-    console.log("fetched")
-})
+// self.addEventListener("fetch", event => {
+//     console.log("fetched")
+// })
 
 // self.addEventListener("notificationclick", event => {
 //     console.log("Notification clicked")
