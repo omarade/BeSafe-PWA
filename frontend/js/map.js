@@ -7,6 +7,11 @@ var origin;
 var destination;
 var waypoints = [];
 
+var decodedPoints
+
+//marker
+var bluedot
+
 // Initialize and add the map
 function initMap() {
 	const directionsRenderer = new google.maps.DirectionsRenderer();
@@ -27,7 +32,7 @@ function initMap() {
 		fullscreenControl: true
 	});
 
-	var bluedot = placeCurrentLocationMarker()
+	bluedot = placeCurrentLocationMarker()
 	
 	//placeMarker(amsterdam)
 
@@ -77,47 +82,14 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
 			origin: origin,
 			destination: destination,
 			waypoints: waypoints,
-			// origin: { lat: 51.618144, lng: 4.739765 },
-			// destination: { lat: 51.618618, lng: 4.739097 },
-			// waypoints: [
-			// 	{location: { lat: 51.618211, lng: 4.738166 }},
-			// 	{location: {
-			// 		lat: 51.61941889981885,
-			// 		lng: 4.739231152082226
-			// 	}}
-
-			// ],
-			// Note that Javascript allows us to access the constant
-			// using square brackets and a string value as its
-			// "property."
 			travelMode: google.maps.TravelMode["WALKING"],
 		})
 		.then((response) => {
-			console.log(response)
-			var decodedPoints = google.maps.geometry.encoding.decodePath(response.routes[0].overview_polyline) ;
-			var currentLocation = {
-				"lat": 51.619254595329764,
-				"lng": 4.740125087935567
-			}
-
-			calculateDistanceFromRoute(decodedPoints, currentLocation)
+			decodedPoints = google.maps.geometry.encoding.decodePath(response.routes[0].overview_polyline);
 		
 			directionsRenderer.setDirections(response);
-			return decodedPoints
 		})
 		.catch((e) => console.log("Directions request failed due to -> " + e));
-}
-
-
-//find closest point to current location
-function findClosestPoint(linePointsDistances){
-	var closestPoint = 500;
-	linePointsDistances.forEach(point => {
-		if(point.distance.value < closestPoint){
-			closestPoint = point.distance.value
-		}
-	})
-	return closestPoint
 }
 
 
@@ -128,16 +100,10 @@ function getCurrentLocation(marker) {
 			marker.setPosition(latlng);
 		
 			map.setCenter(latlng);
-			console.log(res)
 			return latlng
 		}, err => {
 			console.log(err)
 		})
-
-		// navigator.geolocation.getCurrentPosition(function(position) {
-			// 	var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-			// 	marker.setPosition(latlng);
-			// 	map.setCenter(latlng);
 	}
 }
 
@@ -145,7 +111,11 @@ function getCurrentLocation(marker) {
 function trackUsersLocation() {
 	if (navigator.geolocation) {
 		navigator.geolocation.watchPosition(res => {
-			console.log(res)
+
+			currentLocation = {lat: res.coords.latitude, lng: res.coords.longitude}
+			bluedot.setPosition(currentLocation)
+			calculateDistanceFromRoute(decodedPoints, currentLocation)
+
 		}, err => {
 			console.log(err)
 		})
@@ -168,9 +138,25 @@ function calculateDistanceFromRoute(decodedPoints, currentLocation){
 		travelMode: 'WALKING',
 		avoidTolls: true
 	}, (res) => {
+		console.log("res.rows[0].elements")
 		console.log(res.rows[0].elements)
-		return res.rows[0].elements
+
+		var linePointsDistances = res.rows[0].elements
+		findClosestPoint(linePointsDistances)
+		//return res.rows[0].elements
 	});
+}
+
+//find closest point to current location
+function findClosestPoint(linePointsDistances){
+	var closestPoint = 500;
+	linePointsDistances.forEach(point => {
+		if(point.distance.value < closestPoint){
+			closestPoint = point.distance.value
+		}
+	})
+	console.log(closestPoint)
+	return closestPoint
 }
 
 //place current loaction marker
@@ -208,38 +194,19 @@ function placeMarker(location) {
 }
 
 
-
-
 function addYourLocationButton(map, marker) 
 {
 	var controlDiv = document.createElement('div');
 	
 	var firstChild = document.createElement('button');
 	
-	firstChild.style.backgroundColor = '#fff';
-	firstChild.style.border = 'none';
-	firstChild.style.outline = 'none';
-	firstChild.style.width = '40px';
-	firstChild.style.height = '40px';
-	firstChild.style.borderRadius = '50px';
-	firstChild.style.boxShadow = '0 1px 4px rgba(0,0,0,0.3)';
-	firstChild.style.cursor = 'pointer';
-	firstChild.style.marginRight = '10px';
-	firstChild.style.padding = '7px';
 	firstChild.title = 'Your Location';
+	firstChild.id = 'btnCurrentLocation'
 	controlDiv.appendChild(firstChild);
 	
 	var secondChild = document.createElement('div');
-	secondChild.style.height = '26px';
-	secondChild.style.backgroundImage = 'url(../icon.png)';
-	secondChild.style.backgroundSize = 'contain';
-	secondChild.style.backgroundRepeat = 'no-repeat';
-	secondChild.id = 'your_location_img';
+	secondChild.id = 'gpsIcon';
 	firstChild.appendChild(secondChild);
-	
-	google.maps.event.addListener(map, 'center_changed', function() {
-		$('#your_location_img').css('background-position', '0px 0px');
-	});
 
 	firstChild.addEventListener('click', function() {		
 		getCurrentLocation(marker);
@@ -249,5 +216,9 @@ function addYourLocationButton(map, marker)
 	controlDiv.index = 1;
 	map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlDiv);
 }
+
+$("#btnStartTrip").click(() => {
+	trackUsersLocation();
+})
 
 window.initMap = initMap;

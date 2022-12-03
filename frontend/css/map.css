@@ -25,6 +25,26 @@
     margin: 0;
 }
 
+#btnCurrentLocation {
+    background-color: rgb(255, 255, 255);
+    border: none;
+    outline: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    padding: 7px;
+}
+
+#gpsIcon {
+    background-image: url("../icon.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 26px;
+}
+
 #containerShowRoute > button {
     margin: 10px;
     background-color: #0f81dc;
