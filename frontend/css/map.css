@@ -1,6 +1,69 @@
 #map {
-    height: 900px;
+    height: 60%;
     /* The height is 400 pixels */
     width: 100%;
     /* The width is the width of the web page */
-  }
+}
+
+#instruction {
+    margin: 10px;
+    background-color: rgb(255, 255, 255);
+    border: none;
+    outline: none;
+    width: 200px;
+    height: 40px;
+    border-radius: 20px;
+    box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px;
+    position: absolute;
+    z-index: 999;
+    line-height: 40px;
+    text-align: center;
+    font-size: large;
+}
+
+#instruction > h5 {
+    margin: 0;
+}
+
+#containerShowRoute > button {
+    margin: 10px;
+    background-color: #0f81dc;
+    color: white;
+    border: none;
+    outline: none;
+    width: 55px;
+    height: 55px;
+    border-radius: 30px;
+    box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px;
+    position: absolute;
+    z-index: 999;
+    top: 48%;
+    padding: 0px 10px;
+}
+
+#route_img {
+    background-image: url("../route.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 35px;
+    width: 35px;
+}
+
+#btnStartTrip { 
+    text-align:  center;
+}
+
+#btnStartTrip > button {
+    margin: 30px;
+    background-color: #252d33;
+    color: white;
+    border: none;
+    outline: none;
+    width: 165px;
+    height: 60px;
+    border-radius: 20px;
+    box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px;
+    font-size: large;
+    letter-spacing: 2px;
+}
+
