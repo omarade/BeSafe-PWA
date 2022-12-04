@@ -1,20 +1,29 @@
 var map;
 var currentLocation;
 var routeSelectionStep = 0;
+var directionsRenderer;
+var markers = [];
+
+var watchId;
 
 //route vars
 var origin;
 var destination;
 var waypoints = [];
 
-var decodedPoints
+//alert
+var safe = true;
+
+var decodedPoints;
+
+var maxDistance = 20;
 
 //marker
-var bluedot
+var bluedot;
 
 // Initialize and add the map
 function initMap() {
-	const directionsRenderer = new google.maps.DirectionsRenderer();
+	directionsRenderer = new google.maps.DirectionsRenderer();
 	const directionsService = new google.maps.DirectionsService();
 
 	// The location of Eindhoven
@@ -110,7 +119,7 @@ function getCurrentLocation(marker) {
 //track users location
 function trackUsersLocation() {
 	if (navigator.geolocation) {
-		navigator.geolocation.watchPosition(res => {
+		watchId = navigator.geolocation.watchPosition(res => {
 
 			currentLocation = {lat: res.coords.latitude, lng: res.coords.longitude}
 			bluedot.setPosition(currentLocation)
@@ -142,14 +151,21 @@ function calculateDistanceFromRoute(decodedPoints, currentLocation){
 		console.log(res.rows[0].elements)
 
 		var linePointsDistances = res.rows[0].elements
-		findClosestPoint(linePointsDistances)
+		var closestPoint = findClosestPoint(linePointsDistances)
+
+		if(closestPoint > maxDistance && safe) {
+			//Send Msg
+			console.log("Kidnapped")
+			safe = false;
+		}
+
 		//return res.rows[0].elements
 	});
 }
 
 //find closest point to current location
 function findClosestPoint(linePointsDistances){
-	var closestPoint = 500;
+	var closestPoint = linePointsDistances[0].distance.value;
 	linePointsDistances.forEach(point => {
 		if(point.distance.value < closestPoint){
 			closestPoint = point.distance.value
@@ -182,15 +198,18 @@ function placeCurrentLocationMarker(location) {
 
 //place marker on map and move camera to it
 function placeMarker(location) {
-	var mark = new google.maps.Marker({
+	var marker = new google.maps.Marker({
 		position: location,
 		map: map
 	});
+
+	markers.push(marker);
+
 	if(location) {
 		map.panTo(location);
 	}
 	
-	return mark;
+	return marker;
 }
 
 
@@ -217,8 +236,34 @@ function addYourLocationButton(map, marker)
 	map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlDiv);
 }
 
-$("#btnStartTrip").click(() => {
+function clearMarkers() {
+	console.log(markers)
+	markers.forEach(marker => {
+		marker.setMap(null);
+	})
+	markers = [];
+}
+
+$("#btnStartTrip > button").click(() => {
+	var maxDistanceInp = $("#maxDistanceInp")
+	if(maxDistanceInp.val()) {
+		maxDistance = maxDistanceInp.val()
+
+	}
+
 	trackUsersLocation();
+})
+
+$("#btnArrived > button").click(() => {
+	if (navigator.geolocation) {
+		navigator.geolocation.clearWatch(watchId);
+		directionsRenderer.set("directions", null);
+		clearMarkers();
+
+		origin = null;
+		destination = null;
+		waypoints = [];
+	}
 })
 
 window.initMap = initMap;
