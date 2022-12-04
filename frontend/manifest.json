@@ -2,7 +2,8 @@
     "theme_color": "#f69435",
     "background_color": "#f69435",
     "display": "fullscreen",
-    "start_url": "/",
+    "start_url": "./",
+    "scope": ".",
     "name": "besafe-app",
     "short_name": "besafe-app",
     "icons": [

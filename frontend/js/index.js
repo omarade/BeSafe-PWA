@@ -13,14 +13,15 @@ registerServiceWorker();
 
 function registerServiceWorker() {
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./service-worker.js')
+        // navigator.serviceWorker.getRegistration
+        navigator.serviceWorker.register('./service-worker.js', {scope: '/'})
             .then((registering)=>{
                 // Registration was successful
-                console.log("Browser: Service Worker registration is successful with the scope ",registering.scope);
+                console.log("Browser: Service Worker registration is successful with the scope ", registering.scope);
             })
             .catch((error)=>{
                 //The registration of the service worker failed
-                console.log("Browser: Service Worker registration failed with the error ",error);
+                console.log("Browser: Service Worker registration failed with the error ", error);
             });
     } else {
         //The registration of the service worker failed

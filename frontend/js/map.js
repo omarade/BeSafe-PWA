@@ -1,5 +1,8 @@
+import {sendSms} from "./sendSos.js"
+
 var map;
 var currentLocation;
+var address
 var routeSelectionStep = 0;
 var directionsRenderer;
 var markers = [];
@@ -101,19 +104,38 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
 		.catch((e) => console.log("Directions request failed due to -> " + e));
 }
 
-
 function getCurrentLocation(marker) {
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition( res => {
+			console.log(res)
 			var latlng = new google.maps.LatLng(res.coords.latitude, res.coords.longitude);
 			marker.setPosition(latlng);
-		
 			map.setCenter(latlng);
+
+			convertLocationToAddress({lat: res.coords.latitude, lng: res.coords.longitude});
+
 			return latlng
 		}, err => {
 			console.log(err)
 		})
 	}
+}
+
+function convertLocationToAddress(location) {
+	var latLng = `${location.lat},${location.lng}`
+	fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLng}&key=AIzaSyDsG7ARwUwAiTNs8_AQszdR4mbCLr5kjHc`)
+	.then((responseText) => {
+		return responseText.json();
+	})
+	.then(jsonData => {
+		address = jsonData.results[0].formatted_address;
+		console.log(address);
+		return address;
+	})
+	.catch(error => {
+		console.log(error);
+
+	})
 }
 
 //track users location
@@ -135,10 +157,20 @@ function trackUsersLocation() {
 function calculateDistanceFromRoute(decodedPoints, currentLocation){
 	var linePoints = []
 
+	console.log("decodedPoints")
+	console.log(decodedPoints)
+
+	console.log("currentLocation")
+	console.log(currentLocation)
+
+
 	decodedPoints.forEach(point => {
 		var p = {lat: point.lat(), lng: point.lng()}
 		linePoints.push(p)
 	});
+
+	console.log("linePoints")
+	console.log(linePoints)
 
 	var service = new google.maps.DistanceMatrixService();
 	service.getDistanceMatrix({
@@ -147,6 +179,8 @@ function calculateDistanceFromRoute(decodedPoints, currentLocation){
 		travelMode: 'WALKING',
 		avoidTolls: true
 	}, (res) => {
+		console.log("RES")
+		console.log(res)
 		console.log("res.rows[0].elements")
 		console.log(res.rows[0].elements)
 
@@ -155,11 +189,18 @@ function calculateDistanceFromRoute(decodedPoints, currentLocation){
 
 		if(closestPoint > maxDistance && safe) {
 			//Send Msg
-			console.log("Kidnapped")
+			console.log("Kidnapped");
 			safe = false;
+			
+			console.log("address");
+			console.log(address);
+
+			sendSms(address);
 		}
 
 		//return res.rows[0].elements
+	}, err => {
+		console.log(err)
 	});
 }
 
@@ -248,7 +289,7 @@ $("#btnStartTrip > button").click(() => {
 	var maxDistanceInp = $("#maxDistanceInp")
 	if(maxDistanceInp.val()) {
 		maxDistance = maxDistanceInp.val()
-
+console.log(maxDistance)
 	}
 
 	trackUsersLocation();
@@ -265,5 +306,7 @@ $("#btnArrived > button").click(() => {
 		waypoints = [];
 	}
 })
+
+
 
 window.initMap = initMap;
