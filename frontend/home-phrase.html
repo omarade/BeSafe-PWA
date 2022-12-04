@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Home (phrase)</title>
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="grid-container">
+
+        <div class="grid-item grid-item-1">
+            <div class="settings-img">
+                <a href="settings.html">
+                    <img href="settings.html" src="images/settings.png" alt="settings">
+                </a>
+            </div>
+
+            <div class="contacts-img">
+                <a href="contact-created.html">
+                    <img src="images/contact.png" alt="contacts">
+                </a>
+            </div>
+        </div>
+
+        <div class="grid-item grid-item-2">
+            <div class="hint">
+                <p>Listening for safety phrase</p>
+            </div>
+
+            <div class="speech-section">
+                <img src="./images/loading3.gif" alt="listening">
+                <h5>Safety phrase:</h5>
+                
+                <form id="phrase-form">
+
+                    <input type="text" id="safety-phrase">
+                    <button type="button" id="btnPhrase" onclick="handleSubmit()">Set Phrase</button>
+
+                </form>
+
+                <p>Hello World</p>
+            </div>
+        </div>
+        
+        <div class="grid-item grid-item-3"></div>
+
+    </div>
+
+    <script src="./js/voicerec.js"></script>
+</body>
+
+</html>

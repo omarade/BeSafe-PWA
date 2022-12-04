@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Add Contact</title>
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="grid-container">
+
+        <div class="grid-item grid-item-1">
+            <div class="settings-img">
+                <a href="home-phrase.html"><img src="images/home.png" alt="contacts"></a>
+            </div>
+        </div>
+        <div class="grid-item grid-item-2">
+            <div class="new-contact">
+                <div class="contact-form">
+                    <form>
+                        <label for="fname">First Name</label>
+                        <input type="text" id="fname" name="fname">
+                        <label for="lname">Last Name</label>
+                        <input type="text" id="lname" name="lname">
+                        <label for="phonenr">Phone Number</label>
+                        <input type="text" id="phonenr" name="phonenr">
+                    </form>
+                </div>
+                <img id="addContactBtn" src="./images/add.png" onclick="handleSubmit()" alt="add-contact">
+            </div>
+        </div>
+        <div class="grid-item grid-item-3"></div>
+
+    </div>
+
+    <!-- DATABASE IMPORT -->
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyB0MfM0w8vT1TUqUszetYQkSfNTGrPr_Mc",
+          authDomain: "bsafedata.firebaseapp.com",
+          projectId: "bsafedata",
+          storageBucket: "bsafedata.appspot.com",
+          messagingSenderId: "111516589032",
+          appId: "1:111516589032:web:b52e2b1e38189cc732a25d"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        import {getDatabase, ref, set, child, update, remove}
+        from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js"
+
+        const db = getDatabase();
+
+        // REFERENCES
+        
+        var firstnameAdd = document.getElementById("fname");
+        var lastnameAdd = document.getElementById("lname");
+        var phoneNumberAdd = document.getElementById("phonenr");
+        var addContact = document.getElementById("addContactBtn");
+
+        // Function
+
+        function insterData(){
+            set(ref(db, "Contacts/"+ phoneNumberAdd.value),{
+                contactFName: firstnameAdd.value,
+                contactLName: lastnameAdd.value,
+                contactNumber: phoneNumberAdd.value
+            })
+            .then(()=>{
+                alert("Contact has been added succesfully!");
+            })
+            .catch((error)=>{
+                alert("Contact failed to be added"+error);
+            });
+        }
+
+        //Button
+
+        addContact.addEventListener('click', insterData)
+
+      </script>
+      <script src="./js/localstorageSave.js"></script>
+</body>
