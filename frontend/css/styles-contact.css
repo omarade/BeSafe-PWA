@@ -1,0 +1,148 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Montserrat', sans-serif;
+
+}
+
+.grid-container {
+    display: grid;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #31393C;
+    grid-template-rows: 1fr 12fr 1fr;
+}
+
+.grid-item-1 {
+    align-items: center;
+    background: #31393C;
+    display: block;
+}
+
+.grid-item-1 img {
+    position: absolute;
+    height: 80%;
+    width: 80%;
+}
+
+.settings-img {
+    margin: 5% 5% 5% 5%;
+    position: absolute;
+    height: 2.2em;
+    width: 2.2em;
+    left: 0.3em;
+}
+
+.contacts-img {
+    margin: 5% 5% 5% 5%;
+    position: absolute;
+    height: 2.2em;
+    width: 2.2em;
+    right: 0;   
+}
+
+.home-img {
+    margin: 5% 5% 5% 5%;
+    position: absolute;
+    height: 2.2em;
+    width: 2.2em;
+    right: 0;   
+}
+
+.grid-item-2 {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    flex-direction: column;
+    background: #31393C;
+}
+
+
+/* ADD CONTACT */
+
+
+.new-contact {
+    position: relative;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+}
+
+.contact-form {
+    padding-top: 20%;
+    padding-left: 9%;
+    display: flex;
+    width: 100%;
+    height: 80%;
+    justify-content: center;
+}
+
+label {
+    font-size: 14px;
+    font-weight: 300;
+    color: white;
+
+}
+
+input[type=text] {
+    color: white;
+    width: 90%;
+    padding: 8px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 20px;
+    background-color:#31393C;
+}
+
+
+/* CONTACT CREATED PAGE */
+
+.created-contact {
+    position: relative;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+}
+
+.created-contact p {
+    position: absolute;
+    color: white;
+    margin-left:auto;
+    margin-right: auto;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    padding-left: 13%;
+    display: flex;
+    width: 100%;
+    height: 80%;
+    justify-content: center;
+    color: white;
+}
+
+.contact-info h5 {
+    font-weight: 200;
+}
+
+.contact-info span {
+    position: absolute;
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+
+
+
