@@ -8,7 +8,7 @@ app.use(cors())
 app.get('/', (req, res) => {
     var address = req.query.location
     
-    // sendSms(address)
+    sendSms(address)
     console.log("Send SMS")
     res.send({message: "Msg sent to your emergency contact"})
 })

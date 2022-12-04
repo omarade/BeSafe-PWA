@@ -194,7 +194,7 @@ function calculateDistanceFromRoute(decodedPoints, currentLocation){
 			
 			console.log("address");
 			console.log(address);
-
+			alert("You are too far away from your route, a message has been sent to your emergency contact.")
 			sendSms(address);
 		}
 
@@ -289,8 +289,9 @@ $("#btnStartTrip > button").click(() => {
 	var maxDistanceInp = $("#maxDistanceInp")
 	if(maxDistanceInp.val()) {
 		maxDistance = maxDistanceInp.val()
-console.log(maxDistance)
+		console.log(maxDistance)
 	}
+	alert("Your trip has been started")
 
 	trackUsersLocation();
 })
@@ -299,6 +300,8 @@ $("#btnArrived > button").click(() => {
 	if (navigator.geolocation) {
 		navigator.geolocation.clearWatch(watchId);
 		directionsRenderer.set("directions", null);
+		alert("You arrived to your destination")
+
 		clearMarkers();
 
 		origin = null;
