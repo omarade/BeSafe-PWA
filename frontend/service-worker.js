@@ -6,32 +6,31 @@ const cacheName="site_static";
 const appAssets = [
     // "/",
     "index.html",
+    "settings.html",
+    "home-phrase.html",
+    "contact-created.html",
+    "alarm-confirm.html",
+    "add-contact.html",
+    "./html/map.html",
+    "./html/sos.html",
 	"./manifest.json",
 	"./js/index.js",
-	"./css/index.css",
+    "./js/coundown.js",
+    "./js/map.js",
+    "./js/sendSos.js",
+    "./js/sos.js",
+    "./voicerec.js",
+	"./css/style.css",
+	"./css/style-contact.css",
+    "./css/map.css",
+	"./css/sos.css",
     "./"
 ];
 
-// workbox.routing.registerRoute(({req}) => {
-//         console.log("************************")
-//         console.log(req)
-//         // req.destination === 'document' 
-//     },
-    
+// workbox.routing.registerRoute(
+//     (()=>{}), 
 //     new workbox.strategies.NetworkFirst()
 // )
-
-// const matchCB = ({url, req, event}) => {
-//     return url.pathname === '/map'
-// }
-
-// const handlerCB = async ({url, req, event, params}) => {
-//     const res = await fetch(req);
-//     const resBody = await res.text();
-// }
-
-// resgisterRoute({url, req})
-
 
 
 self.addEventListener("install", event => {

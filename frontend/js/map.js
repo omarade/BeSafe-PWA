@@ -304,9 +304,10 @@ $("#btnArrived > button").click(() => {
 
 		clearMarkers();
 
-		origin = null;
-		destination = null;
+		origin = {};
+		destination = {};
 		waypoints = [];
+		routeSelectionStep = 0;
 	}
 })
 
