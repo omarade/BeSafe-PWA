@@ -12,14 +12,14 @@ const appAssets = [
     "./"
 ];
 
-workbox.routing.registerRoute(({req}) => {
-        console.log("************************")
-        console.log(req)
-        // req.destination === 'document' 
-    },
+// workbox.routing.registerRoute(({req}) => {
+//         console.log("************************")
+//         console.log(req)
+//         // req.destination === 'document' 
+//     },
     
-    new workbox.strategies.NetworkFirst()
-)
+//     new workbox.strategies.NetworkFirst()
+// )
 
 // const matchCB = ({url, req, event}) => {
 //     return url.pathname === '/map'

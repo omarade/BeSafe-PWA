@@ -14,7 +14,7 @@ registerServiceWorker();
 function registerServiceWorker() {
     if ('serviceWorker' in navigator) {
         // navigator.serviceWorker.getRegistration
-        navigator.serviceWorker.register('./service-worker.js', {scope: '/'})
+        navigator.serviceWorker.register('/service-worker.js')
             .then((registering)=>{
                 // Registration was successful
                 console.log("Browser: Service Worker registration is successful with the scope ", registering.scope);

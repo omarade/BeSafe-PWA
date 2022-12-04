@@ -2,6 +2,22 @@ body {
     background-color: #31393C;
 }
 
+.grid-container {
+    margin: 15px;
+}
+
+.grid-item {
+    display: inline;
+}
+
+#grid-item2 {
+    float: right;
+}
+
+.grid-item > a > img {
+    width: 1.5em;;
+}
+
 #map {
     height: 60%;
     /* The height is 400 pixels */
@@ -86,7 +102,7 @@ body {
     box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px;
     position: absolute;
     z-index: 999;
-    top: 48%;
+    top: 56%;
     padding: 0px 10px;
 }
 
@@ -113,7 +129,7 @@ body {
     border: none;
     outline: none;
     width: 180px;
-    height: 50px;
+    height: 40px;
     border-radius: 20px;
     box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px;
     font-size: medium;
